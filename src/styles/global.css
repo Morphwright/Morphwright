@@ -8,6 +8,7 @@
   --paper: #f7f4ef;
   --paper-2: #efeae1;
   --accent: #c26b3d;
+  --accent-aa: #9e5328; /* WCAG AA on --paper (4.6:1) and vs #fff (4.6:1) */
   --accent-soft: #d9a441;
   --line: rgba(10, 10, 11, 0.12);
 
@@ -60,7 +61,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.
   font-size: var(--step--1);
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--accent);
+  color: var(--accent-aa); /* --accent-aa passes WCAG AA 4.5:1 on --paper at this small type size */
 }
 
 /* ---- buttons ---- */
@@ -73,11 +74,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.
   border-radius: 999px;
   font-size: var(--step--1);
   letter-spacing: 0.02em;
-  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .btn:hover { background: var(--ink); color: var(--paper); }
-.btn--accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn--accent { background: var(--accent-aa); border-color: var(--accent-aa); color: #fff; } /* --accent-aa #9e5328 gives ~4.6:1 vs #fff, WCAG AA */
 .btn--accent:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn--accent:focus-visible { outline-color: var(--paper); } /* outline must contrast against --accent-aa button face */
 .btn--ghost { color: var(--paper); border-color: rgba(247, 244, 239, 0.5); }
 .btn--ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 
@@ -88,6 +90,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .btn { transition: none; }
 }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
