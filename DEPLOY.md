@@ -43,5 +43,11 @@ redirect (or vice-versa) under the domain's Rules if you want one canonical host
 
 ## Notes
 
-- `wrangler.toml` and `public/_headers` (security + immutable asset caching) are committed.
+- A git-connected **Pages** project needs **no `wrangler.toml`** — Pages uploads the
+  build output dir (`dist/`) directly. (A `wrangler.toml` makes the build run
+  `wrangler deploy` (Workers-style), which fails for a static Pages site with
+  "Missing assets directory" — so it is intentionally absent.)
+- `public/_headers` (security + immutable asset caching) is committed and applied by Pages.
+- If a build ever logs `Executing user deploy command: npx wrangler deploy`, clear the
+  project's **Deploy command** (Settings → Builds & deployments) so Pages uses its native upload.
 - Optional perf: import only the `latin` Fontsource subsets if the broader subsets are unwanted.
