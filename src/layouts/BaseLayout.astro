@@ -2,7 +2,6 @@
 import '@fontsource-variable/newsreader';
 import '@fontsource-variable/inter';
 import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -26,7 +25,7 @@ const { title = 'Morphwright', description = 'Morphwright designs the behavior o
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
     <Nav />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
@@ -38,6 +37,8 @@ const { title = 'Morphwright', description = 'Morphwright designs the behavior o
         transition: top 200ms var(--ease);
       }
       .skip-link:focus { top: 0; }
+      /* main is focused programmatically via the skip link; don't ring the whole container */
+      #main:focus { outline: none; }
       @media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
     </style>
 
