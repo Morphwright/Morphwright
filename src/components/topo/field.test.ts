@@ -17,10 +17,18 @@ describe('gaussianPeak', () => {
     expect(far).toBeLessThan(0.01);
   });
 
-  it('is symmetric around the center', () => {
-    const a = gaussianPeak(3, 5, 11, 11, peak);
-    const b = gaussianPeak(7, 5, 11, 11, peak);
-    expect(a).toBeCloseTo(b, 6);
+  it('is symmetric around the center (non-square grid exercises anisotropic formula)', () => {
+    // Use cols=22, rows=11 so (radius*cols) != (radius*rows), catching transposition bugs.
+    // Peak center: px = 0.5*(22-1) = 10.5, py = 0.5*(11-1) = 5.0
+    const asymPeak: Peak = { x: 0.5, y: 0.5, strength: 1, radius: 0.2 };
+    // x-symmetry: gx=9 and gx=12 are equidistant (1.5) from px=10.5, same gy=5
+    const ax = gaussianPeak(9, 5, 22, 11, asymPeak);
+    const bx = gaussianPeak(12, 5, 22, 11, asymPeak);
+    expect(ax).toBeCloseTo(bx, 6);
+    // y-symmetry: gy=3 and gy=7 are equidistant (2) from py=5, same gx=10
+    const ay = gaussianPeak(10, 3, 22, 11, asymPeak);
+    const by = gaussianPeak(10, 7, 22, 11, asymPeak);
+    expect(ay).toBeCloseTo(by, 6);
   });
 });
 
@@ -42,7 +50,7 @@ describe('buildField', () => {
   it('makes the peak-center cell the global maximum with a strong peak', () => {
     const n = makeNoise3D(8);
     const cols = 31, rows = 31;
-    const f = buildField(n, { cols, rows, time: 0, scale: 0.08, peak: { x: 0.5, y: 0.5, strength: 5, radius: 0.15 } });
+    const f = buildField(n, { cols, rows, time: 0, scale: 0.08, peak: { x: 0.5, y: 0.5, strength: 50, radius: 0.15 } });
     const cx = Math.round(0.5 * (cols - 1));
     const cy = Math.round(0.5 * (rows - 1));
     const centerIdx = cy * cols + cx;
