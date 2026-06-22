@@ -105,3 +105,34 @@ npx vitest run
 Output:
 - 3 test files, 16 tests — all pass
 - Duration: ~251ms
+
+---
+
+## Fix Round 2
+
+### Findings addressed
+
+Two IMPORTANT findings from the second review round were fixed in `src/layouts/BaseLayout.astro`:
+
+1. **noscript fallback defeated by cascade order** — Changed `[data-reveal]{opacity:1;transform:none}` to `[data-reveal]{opacity:1!important;transform:none!important}` inside the `<noscript>` block. The Astro-injected `<link rel="stylesheet">` lands later in source order (position 360 vs 285) at equal specificity (0,1,0), so without `!important` the linked stylesheet wins. The `!important` declarations override the linked stylesheet regardless of insertion order.
+2. **Skip-link transition not gated on prefers-reduced-motion** — Added `@media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }` inside the same `<style>` block. The global.css reduced-motion block only covers `[data-reveal]` and `.btn`, not `.skip-link`; this guard closes that gap and aligns with the project-wide constraint.
+
+### Commands run
+
+```
+npm run build
+```
+
+Output:
+- 5 pages built successfully
+- 0 errors
+- Build complete in 300ms
+
+```
+npm run check
+```
+
+Output:
+- 0 errors
+- 0 warnings
+- 1 hint (pre-existing: unused `Segment` type import in contours.test.ts)

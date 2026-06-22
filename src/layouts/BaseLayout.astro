@@ -21,7 +21,7 @@ const { title = 'Morphwright', description = 'Morphwright designs the behavior o
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0a0a0b" />
-    <noscript><style>[data-reveal]{opacity:1;transform:none}</style></noscript>
+    <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
@@ -38,6 +38,7 @@ const { title = 'Morphwright', description = 'Morphwright designs the behavior o
         transition: top 200ms var(--ease);
       }
       .skip-link:focus { top: 0; }
+      @media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
     </style>
 
     <script>
