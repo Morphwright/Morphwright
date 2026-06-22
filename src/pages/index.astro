@@ -1,14 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TopoCanvas from '../components/topo/TopoCanvas.astro';
 ---
 <BaseLayout>
-  <main class="section">
-    <div class="container prose">
-      <p class="eyebrow">Token check</p>
-      <h1 style="font-size: var(--step-4)">Morphwright</h1>
-      <p>Body copy in Inter. Warm paper background, ink text.</p>
-      <p style="font-family: var(--font-mono)">mono · IBM Plex Mono</p>
-      <a class="btn btn--accent" href="#">Accent button</a>
-    </div>
-  </main>
+  <section style="position: relative; height: 80vh;">
+    <TopoCanvas />
+  </section>
 </BaseLayout>
