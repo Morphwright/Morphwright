@@ -24,7 +24,7 @@ const steps = [
   </Section>
 
   <Section variant="paper2">
-    <p class="eyebrow" data-reveal>The problem</p>
+    <h2 class="eyebrow" data-reveal>The problem</h2>
     <div class="prose" data-reveal style="margin-top: var(--space-m);">
       <p style="color: var(--ink-80);">
         A protein circuit's behavior is set by its topology and its rates. The same topology can
@@ -35,7 +35,7 @@ const steps = [
   </Section>
 
   <Section variant="light">
-    <p class="eyebrow" data-reveal>How it works</p>
+    <h2 class="eyebrow" data-reveal>How it works</h2>
     <ol class="steps" style="margin-top: var(--space-l);">
       {steps.map((s) => (
         <li class="step" data-reveal>
@@ -63,7 +63,7 @@ const steps = [
   <style>
     .steps { list-style: none; display: grid; gap: var(--space-l); padding: 0; max-width: 50rem; }
     .step { display: grid; grid-template-columns: auto 1fr; gap: var(--space-m); align-items: start; border-top: 1px solid var(--line); padding-top: var(--space-m); }
-    .step__n { font-family: var(--font-mono); color: var(--accent); font-size: var(--step-1); }
+    .step__n { font-family: var(--font-mono); color: var(--accent-aa); font-size: var(--step-1); }
     .step__t { font-size: var(--step-2); }
     .step__d { margin-top: var(--space-s); color: var(--ink-80); }
   </style>

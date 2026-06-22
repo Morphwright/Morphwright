@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { marchingSquares, contourLevels, type Segment } from './contours';
+import { marchingSquares, contourLevels } from './contours';
 
 // 2x2 grid, row-major index = y*cols + x.
 function grid(values: number[]): Float32Array {

@@ -20,6 +20,7 @@ const initials = (name: string) => name.split(' ').map((w) => w[0]).join('').sli
   </Section>
 
   <Section variant="paper2">
+    <h2 class="eyebrow" data-reveal>People</h2>
     <ul class="team" data-reveal>
       {people.map((p) => (
         <li class="member">
@@ -37,7 +38,7 @@ const initials = (name: string) => name.split(' ').map((w) => w[0]).join('').sli
     .member { border-top: 1px solid var(--line); padding-top: var(--space-m); }
     .member__avatar { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: var(--ink); color: var(--paper); font-family: var(--font-mono); font-size: var(--step-0); }
     .member__name { font-size: var(--step-2); margin-top: var(--space-s); }
-    .member__role { font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent); }
+    .member__role { font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent-aa); }
     .member__bio { margin-top: var(--space-s); color: var(--ink-80); }
     @media (max-width: 700px) { .team { grid-template-columns: 1fr; gap: var(--space-m); } }
   </style>

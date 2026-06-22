@@ -80,7 +80,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.
 .btn:hover { background: var(--ink); color: var(--paper); }
 .btn--accent { background: var(--accent-aa); border-color: var(--accent-aa); color: #fff; } /* --accent-aa #9e5328 gives ~4.6:1 vs #fff, WCAG AA */
 .btn--accent:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-.btn--accent:focus-visible { outline-color: var(--paper); } /* outline must contrast against --accent-aa button face */
+.btn--accent:focus-visible { outline-color: var(--ink); } /* outline must contrast against --accent-aa button face */
 .btn--ghost { color: var(--paper); border-color: rgba(247, 244, 239, 0.5); }
 .btn--ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 

@@ -44,7 +44,7 @@ export function createTopo(opts: TopoOptions): TopoControl {
   const levelCount = opts.levels ?? 14;
   const speed = opts.speed ?? 0.00006;
   const scale = opts.scale ?? 0.045;
-  const lineColor = opts.lineColor ?? 'rgba(245, 245, 245, 0.5)';
+  const lineColor = opts.lineColor ?? 'rgba(247, 244, 239, 0.5)';
   const bgColor = opts.bgColor ?? '#0a0a0b';
   const accent = opts.accent ?? '#c26b3d';
   const noise = makeNoise3D(opts.seed ?? 1337);

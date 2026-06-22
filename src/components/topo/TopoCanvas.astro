@@ -64,7 +64,6 @@
     }
 
     window.addEventListener('pagehide', teardown, { once: true });
-    document.addEventListener('astro:before-swap', teardown, { once: true });
   }
 
   document.querySelectorAll<HTMLCanvasElement>('canvas[data-topo]').forEach(mountCanvas);
