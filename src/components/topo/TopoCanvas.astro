@@ -1,0 +1,70 @@
+---
+// Full-bleed animated topographic background. Decorative (aria-hidden).
+---
+<canvas class="topo" data-topo aria-hidden="true"></canvas>
+
+<style>
+  .topo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: var(--ink); }
+</style>
+
+<script>
+  import { createTopo } from './renderer';
+
+  function mountCanvas(canvas: HTMLCanvasElement) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const topo = createTopo({ canvas, reducedMotion: reduced });
+    topo.resize();
+
+    const ac = new AbortController();
+    const { signal } = ac;
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => topo.resize(), 150);
+    }, { signal });
+
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    if (fine && !reduced) {
+      window.addEventListener('pointermove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const nx = (e.clientX - rect.left) / rect.width;
+        const ny = (e.clientY - rect.top) / rect.height;
+        if (nx < 0 || nx > 1 || ny < 0 || ny > 1) topo.setPointer(null, null);
+        else topo.setPointer(nx, ny);
+      }, { passive: true, signal });
+    }
+
+    let io: IntersectionObserver | null = null;
+
+    if (reduced) {
+      topo.start();
+    } else {
+      io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) topo.start();
+          else topo.stop();
+        }
+      }, { threshold: 0 });
+      io.observe(canvas);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) topo.stop();
+        else {
+          const r = canvas.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < window.innerHeight) topo.start();
+        }
+      }, { signal });
+    }
+
+    function teardown() {
+      io?.disconnect();
+      topo.destroy();
+      ac.abort();
+    }
+
+    window.addEventListener('pagehide', teardown, { once: true });
+  }
+
+  document.querySelectorAll<HTMLCanvasElement>('canvas[data-topo]').forEach(mountCanvas);
+</script>

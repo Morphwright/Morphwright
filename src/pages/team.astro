@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+
+const people = [
+  { name: 'Founder Name', role: 'Founder & CEO', bio: 'Background placeholder — to be replaced.' },
+  { name: 'Founder Name', role: 'Founder & CSO', bio: 'Background placeholder — to be replaced.' },
+  { name: 'Team Member', role: 'Computational Biology', bio: 'Background placeholder — to be replaced.' },
+  { name: 'Team Member', role: 'Protein Engineering', bio: 'Background placeholder — to be replaced.' },
+];
+const initials = (name: string) => name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+---
+<BaseLayout title="Team — Morphwright" description="The people building Morphwright.">
+  <Section variant="light">
+    <div class="prose" data-reveal>
+      <p class="eyebrow">Team</p>
+      <h1 style="font-size: var(--step-4); margin-top: var(--space-s);">A small team, working from first principles.</h1>
+      <p style="margin-top: var(--space-m); color: var(--ink-80);">Placeholder introduction — replace with the real team story.</p>
+    </div>
+  </Section>
+
+  <Section variant="paper2">
+    <h2 class="eyebrow" data-reveal>People</h2>
+    <ul class="team" data-reveal>
+      {people.map((p) => (
+        <li class="member">
+          <span class="member__avatar" aria-hidden="true">{initials(p.name)}</span>
+          <h3 class="member__name">{p.name}</h3>
+          <p class="member__role">{p.role}</p>
+          <p class="member__bio">{p.bio}</p>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <style>
+    .team { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-l); }
+    .member { border-top: 1px solid var(--line); padding-top: var(--space-m); }
+    .member__avatar { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: var(--ink); color: var(--paper); font-family: var(--font-mono); font-size: var(--step-0); }
+    .member__name { font-size: var(--step-2); margin-top: var(--space-s); }
+    .member__role { font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent-aa); }
+    .member__bio { margin-top: var(--space-s); color: var(--ink-80); }
+    @media (max-width: 700px) { .team { grid-template-columns: 1fr; gap: var(--space-m); } }
+  </style>
+</BaseLayout>

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+
+const steps = [
+  { n: '01', t: 'Specify a behavior', d: 'Describe the function you want — a switch, a pulse, a band-pass response — in the language of dynamics, not parts.' },
+  { n: '02', t: 'Search the design map', d: 'We locate the regions of circuit space whose qualitative behavior matches the specification.' },
+  { n: '03', t: 'Synthesize circuits', d: 'Candidate protein circuits are assembled from mechanism, with parameters chosen to land inside the target region.' },
+  { n: '04', t: 'Verify in silico', d: 'Each candidate is simulated and phenotyped, so only designs that behave as specified move forward.' },
+];
+---
+<BaseLayout title="Science — Morphwright" description="How Morphwright designs cellular behavior from protein-circuit first principles.">
+  <Section variant="light">
+    <div class="prose" data-reveal>
+      <p class="eyebrow">The science</p>
+      <h1 style="font-size: var(--step-4); margin-top: var(--space-s);">A design map for cellular behavior.</h1>
+      <p style="margin-top: var(--space-m); color: var(--ink-80);">
+        Forward engineering of biology has mostly meant building a part and seeing what it does.
+        We work in the other direction: starting from a behavior and finding the circuits that
+        produce it. That inversion needs a map — a structured account of what protein circuits
+        can and cannot compute.
+      </p>
+    </div>
+  </Section>
+
+  <Section variant="paper2">
+    <h2 class="eyebrow" data-reveal>The problem</h2>
+    <div class="prose" data-reveal style="margin-top: var(--space-m);">
+      <p style="color: var(--ink-80);">
+        A protein circuit's behavior is set by its topology and its rates. The same topology can
+        produce very different functions; very different topologies can produce the same one. Without
+        a map of that relationship, design stays a search in the dark.
+      </p>
+    </div>
+  </Section>
+
+  <Section variant="light">
+    <h2 class="eyebrow" data-reveal>How it works</h2>
+    <ol class="steps" style="margin-top: var(--space-l);">
+      {steps.map((s) => (
+        <li class="step" data-reveal>
+          <span class="step__n">{s.n}</span>
+          <div>
+            <h3 class="step__t">{s.t}</h3>
+            <p class="step__d">{s.d}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section variant="dark">
+    <div class="prose" data-reveal>
+      <h2 style="font-size: var(--step-3); color: #fff;">Scope</h2>
+      <p style="margin-top: var(--space-m); color: rgba(247,244,239,0.78);">
+        Our methods target protein-level circuits — sensing, signaling, and regulation that act on
+        the timescale of a cell's decisions. This page is a plain-language overview; technical
+        detail is available on request.
+      </p>
+    </div>
+  </Section>
+
+  <style>
+    .steps { list-style: none; display: grid; gap: var(--space-l); padding: 0; max-width: 50rem; }
+    .step { display: grid; grid-template-columns: auto 1fr; gap: var(--space-m); align-items: start; border-top: 1px solid var(--line); padding-top: var(--space-m); }
+    .step__n { font-family: var(--font-mono); color: var(--accent-aa); font-size: var(--step-1); }
+    .step__t { font-size: var(--step-2); }
+    .step__d { margin-top: var(--space-s); color: var(--ink-80); }
+  </style>
+</BaseLayout>

@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import Pillars from '../components/Pillars.astro';
+---
+<BaseLayout title="Morphwright — designing the behavior of living cells">
+  <Hero />
+
+  <Section variant="light" id="intro">
+    <div class="prose" data-reveal>
+      <p class="eyebrow">What we do</p>
+      <h2 style="font-size: var(--step-3); margin-top: var(--space-s);">
+        Biology already computes. We give it a specification.
+      </h2>
+      <p style="margin-top: var(--space-m); color: var(--ink-80);">
+        Cells sense, decide, and act through networks of interacting proteins. Morphwright
+        treats those networks as designable systems — mapping the behaviors they can produce
+        and synthesizing the circuits that reach a target on purpose.
+      </p>
+    </div>
+  </Section>
+
+  <Section variant="paper2">
+    <h2 class="eyebrow" data-reveal>How we work</h2>
+    <div style="margin-top: var(--space-l);">
+      <Pillars />
+    </div>
+  </Section>
+
+  <Section variant="dark">
+    <div class="prose" data-reveal>
+      <p class="eyebrow">The science</p>
+      <h2 style="font-size: var(--step-3); margin-top: var(--space-s); color: #fff;">
+        A design map for cellular behavior.
+      </h2>
+      <p style="margin-top: var(--space-m); color: rgba(247,244,239,0.78);">
+        Our work starts from a simple claim: the space of behaviors a protein circuit can
+        produce is finite, structured, and navigable. Read how we chart it.
+      </p>
+      <p style="margin-top: var(--space-l);"><a class="btn btn--ghost" href="/science">Read the science</a></p>
+    </div>
+  </Section>
+
+  <Section variant="light">
+    <div class="prose" data-reveal>
+      <h2 style="font-size: var(--step-3);">Build life that behaves.</h2>
+      <p style="margin-top: var(--space-m); color: var(--ink-80);">
+        We are a small team of scientists and engineers. If the design layer for living
+        systems is the problem you want to work on, we should talk.
+      </p>
+      <div style="margin-top: var(--space-l); display: flex; gap: var(--space-s); flex-wrap: wrap;">
+        <a class="btn btn--accent" href="/careers">See open roles</a>
+        <a class="btn" href="/contact">Contact us</a>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
