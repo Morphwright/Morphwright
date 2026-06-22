@@ -1,0 +1,25 @@
+---
+const pillars = [
+  { n: '01', title: 'A map of behavior', body: 'Every cellular function corresponds to a region in a vast design space. We chart it, so behavior becomes something you can specify rather than stumble upon.' },
+  { n: '02', title: 'First-principles circuits', body: 'We compose protein circuits from mechanism, not trial and error — reasoning from the chemistry up to the function it should produce.' },
+  { n: '03', title: 'Verified in silico', body: 'Every candidate is built, simulated, and phenotyped before it reaches the bench, so the designs we pursue are the ones that should work.' },
+];
+---
+<div class="pillars">
+  {pillars.map((p) => (
+    <article class="pillar" data-reveal>
+      <span class="pillar__n">{p.n}</span>
+      <h3 class="pillar__title">{p.title}</h3>
+      <p class="pillar__body">{p.body}</p>
+    </article>
+  ))}
+</div>
+
+<style>
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-l); }
+  .pillar { border-top: 1px solid var(--line); padding-top: var(--space-m); }
+  .pillar__n { font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent); }
+  .pillar__title { font-size: var(--step-2); margin-top: var(--space-s); }
+  .pillar__body { margin-top: var(--space-s); color: var(--ink-80); }
+  @media (max-width: 800px) { .pillars { grid-template-columns: 1fr; gap: var(--space-m); } }
+</style>

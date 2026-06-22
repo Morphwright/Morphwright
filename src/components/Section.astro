@@ -1,0 +1,15 @@
+---
+interface Props { variant?: 'light' | 'paper2' | 'dark'; id?: string; }
+const { variant = 'light', id } = Astro.props;
+---
+<section class:list={['section', `section--${variant}`]} id={id}>
+  <div class="container">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section--light { background: var(--paper); color: var(--ink); }
+  .section--paper2 { background: var(--paper-2); color: var(--ink); }
+  .section--dark { background: var(--ink); color: var(--paper); }
+</style>

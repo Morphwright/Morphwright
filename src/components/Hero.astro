@@ -1,0 +1,43 @@
+---
+import TopoCanvas from './topo/TopoCanvas.astro';
+---
+<section class="hero">
+  <TopoCanvas />
+  <div class="hero__overlay container">
+    <div class="hero__brand">
+      <svg class="hero__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 7 L41 41 H7 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+        <path d="M24 16 L35 37 H13 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+        <path d="M24 25 L29 34 H19 Z" stroke="var(--accent)" stroke-width="1.4" stroke-linejoin="round" />
+      </svg>
+      <span class="hero__wordmark">Morphwright</span>
+    </div>
+    <h1 class="hero__headline">We engineer the behavior of living cells.</h1>
+    <p class="hero__sub">
+      Morphwright builds the design layer for cellular behavior — turning desired
+      function into the protein circuits that produce it.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--accent" href="/science">See the science</a>
+      <a class="btn btn--ghost" href="/contact">Get in touch</a>
+    </div>
+  </div>
+  <a class="hero__scroll" href="#intro" aria-label="Scroll to content"><span>scroll</span></a>
+</section>
+
+<style>
+  .hero { position: relative; min-height: 100svh; display: flex; align-items: center; color: var(--paper); overflow: hidden; }
+  .hero__overlay { position: relative; z-index: 2; padding-block: var(--space-xl); }
+  .hero__brand { display: flex; align-items: center; gap: 0.75rem; color: var(--paper); margin-bottom: var(--space-l); }
+  .hero__mark { width: 40px; height: 40px; }
+  .hero__wordmark { font-family: var(--font-display); font-size: var(--step-1); letter-spacing: 0.01em; }
+  .hero__headline { font-size: var(--step-4); max-width: 18ch; color: #fff; }
+  .hero__sub { margin-top: var(--space-m); max-width: 46ch; font-size: var(--step-1); color: rgba(247, 244, 239, 0.78); }
+  .hero__actions { margin-top: var(--space-l); display: flex; flex-wrap: wrap; gap: var(--space-s); }
+  .hero__scroll {
+    position: absolute; left: 50%; bottom: 1.5rem; transform: translateX(-50%);
+    z-index: 2; font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247, 244, 239, 0.6);
+  }
+  .hero__scroll::after { content: ''; display: block; width: 1px; height: 28px; margin: 6px auto 0; background: rgba(247, 244, 239, 0.4); }
+</style>
