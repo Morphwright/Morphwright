@@ -1,12 +1,14 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Morphwright</title>
-  </head>
-  <body>
-    <h1>Morphwright — scaffold</h1>
-  </body>
-</html>
+<BaseLayout>
+  <main class="section">
+    <div class="container prose">
+      <p class="eyebrow">Token check</p>
+      <h1 style="font-size: var(--step-4)">Morphwright</h1>
+      <p>Body copy in Inter. Warm paper background, ink text.</p>
+      <p style="font-family: var(--font-mono)">mono · IBM Plex Mono</p>
+      <a class="btn btn--accent" href="#">Accent button</a>
+    </div>
+  </main>
+</BaseLayout>
