@@ -17,7 +17,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     </button>
     <nav class="nav__links" aria-label="Primary">
       {links.map((l) => (
-        <a href={l.href} class:list={['nav__link', { 'is-active': isActive(l.href) }]}>{l.label}</a>
+        <a href={l.href} class:list={['nav__link', { 'is-active': isActive(l.href) }]} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
       ))}
     </nav>
   </div>
@@ -61,6 +61,13 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     .nav[data-open] .nav__toggle span:first-child { transform: translateY(6.5px) rotate(45deg); }
     .nav[data-open] .nav__toggle span:last-child { transform: translateY(-6.5px) rotate(-45deg); }
     .nav__link { padding-block: 0.75rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav__link { transition: none; }
+    .nav__toggle span { transition: none; }
+    .nav[data-open] .nav__toggle span:first-child { transform: none; }
+    .nav[data-open] .nav__toggle span:last-child { transform: none; }
   }
 </style>
 
