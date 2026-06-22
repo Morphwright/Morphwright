@@ -10,17 +10,19 @@
 <script>
   import { createTopo } from './renderer';
 
-  const canvas = document.querySelector<HTMLCanvasElement>('canvas[data-topo]');
-  if (canvas) {
+  function mountCanvas(canvas: HTMLCanvasElement) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const topo = createTopo({ canvas, reducedMotion: reduced });
     topo.resize();
+
+    const ac = new AbortController();
+    const { signal } = ac;
 
     let resizeTimer = 0;
     window.addEventListener('resize', () => {
       window.clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(() => topo.resize(), 150);
-    });
+    }, { signal });
 
     const fine = window.matchMedia('(pointer: fine)').matches;
     if (fine && !reduced) {
@@ -30,13 +32,15 @@
         const ny = (e.clientY - rect.top) / rect.height;
         if (nx < 0 || nx > 1 || ny < 0 || ny > 1) topo.setPointer(null, null);
         else topo.setPointer(nx, ny);
-      }, { passive: true });
+      }, { passive: true, signal });
     }
+
+    let io: IntersectionObserver | null = null;
 
     if (reduced) {
       topo.start();
     } else {
-      const io = new IntersectionObserver((entries) => {
+      io = new IntersectionObserver((entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) topo.start();
           else topo.stop();
@@ -50,7 +54,18 @@
           const r = canvas.getBoundingClientRect();
           if (r.bottom > 0 && r.top < window.innerHeight) topo.start();
         }
-      });
+      }, { signal });
     }
+
+    function teardown() {
+      io?.disconnect();
+      topo.destroy();
+      ac.abort();
+    }
+
+    window.addEventListener('pagehide', teardown, { once: true });
+    document.addEventListener('astro:before-swap', teardown, { once: true });
   }
+
+  document.querySelectorAll<HTMLCanvasElement>('canvas[data-topo]').forEach(mountCanvas);
 </script>
