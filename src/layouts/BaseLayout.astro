@@ -4,6 +4,8 @@ import '@fontsource-variable/inter';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title?: string;
@@ -21,6 +23,10 @@ const { title = 'Morphwright', description = 'Morphwright designs the behavior o
     <meta name="theme-color" content="#0a0a0b" />
   </head>
   <body>
-    <slot />
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>

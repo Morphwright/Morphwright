@@ -1,0 +1,74 @@
+---
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/science', label: 'Science' },
+  { href: '/team', label: 'Team' },
+  { href: '/careers', label: 'Careers' },
+  { href: '/contact', label: 'Contact' },
+];
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class="nav" data-nav>
+  <div class="container nav__inner">
+    <a class="nav__brand" href="/">Morphwright</a>
+    <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" data-nav-toggle>
+      <span></span><span></span>
+    </button>
+    <nav class="nav__links" aria-label="Primary">
+      {links.map((l) => (
+        <a href={l.href} class:list={['nav__link', { 'is-active': isActive(l.href) }]}>{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 85%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 4rem; }
+  .nav__brand { font-family: var(--font-display); font-size: var(--step-1); letter-spacing: -0.01em; }
+  .nav__links { display: flex; gap: var(--space-m); }
+  .nav__link {
+    font-size: var(--step--1);
+    letter-spacing: 0.02em;
+    color: var(--ink-60);
+    padding-block: 0.25rem;
+    border-bottom: 1px solid transparent;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .nav__link:hover { color: var(--ink); }
+  .nav__link.is-active { color: var(--ink); border-color: var(--accent); }
+  .nav__toggle { display: none; flex-direction: column; gap: 5px; background: none; border: 0; cursor: pointer; padding: 8px; }
+  .nav__toggle span { width: 22px; height: 1.5px; background: var(--ink); transition: transform 300ms var(--ease), opacity 300ms var(--ease); }
+
+  @media (max-width: 640px) {
+    .nav__toggle { display: flex; }
+    .nav__links {
+      position: absolute; inset: 4rem 0 auto 0;
+      flex-direction: column; gap: 0;
+      background: var(--paper); border-bottom: 1px solid var(--line);
+      padding: var(--space-s) var(--space-m) var(--space-m);
+      display: none;
+    }
+    .nav[data-open] .nav__links { display: flex; }
+    .nav[data-open] .nav__toggle span:first-child { transform: translateY(6.5px) rotate(45deg); }
+    .nav[data-open] .nav__toggle span:last-child { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav__link { padding-block: 0.75rem; }
+  }
+</style>
+
+<script>
+  const nav = document.querySelector('[data-nav]');
+  const toggle = document.querySelector('[data-nav-toggle]');
+  toggle?.addEventListener('click', () => {
+    const open = nav?.toggleAttribute('data-open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

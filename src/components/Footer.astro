@@ -1,0 +1,25 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container footer__inner">
+    <span class="footer__brand">Morphwright</span>
+    <nav class="footer__links" aria-label="Footer">
+      <a href="/science">Science</a>
+      <a href="/team">Team</a>
+      <a href="/careers">Careers</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <span class="footer__meta">© {year} Morphwright</span>
+  </div>
+</footer>
+
+<style>
+  .footer { border-top: 1px solid var(--line); padding-block: var(--space-l); margin-top: var(--space-xl); }
+  .footer__inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); justify-content: space-between; }
+  .footer__brand { font-family: var(--font-display); font-size: var(--step-1); }
+  .footer__links { display: flex; gap: var(--space-m); }
+  .footer__links a { font-size: var(--step--1); color: var(--ink-60); }
+  .footer__links a:hover { color: var(--ink); }
+  .footer__meta { font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-40); }
+</style>
