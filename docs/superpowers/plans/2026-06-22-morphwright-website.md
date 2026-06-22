@@ -127,6 +127,7 @@ export default defineConfig({
   test: {
     include: ['src/**/*.test.ts'],
     environment: 'node',
+    passWithNoTests: true,
   },
 });
 ```
@@ -162,7 +163,7 @@ Expected: completes, creates `node_modules/` and `package-lock.json`, no errors.
 - [ ] **Step 8: Verify build, check, and test all run**
 
 Run: `npm run build && npm run check && npm run test`
-Expected: build writes `dist/`; check reports 0 errors; vitest reports "No test files found" (exit 0). If vitest exits non-zero on no tests, that is acceptable at this step — tests arrive in Task 4.
+Expected: build writes `dist/`; check reports 0 errors; vitest exits 0 ("no test files" tolerated via `passWithNoTests`). Real tests arrive in Task 4.
 
 - [ ] **Step 9: Verify dev server serves the page**
 
@@ -271,6 +272,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.
 .btn:hover { background: var(--ink); color: var(--paper); }
 .btn--accent { background: var(--accent); border-color: var(--accent); color: #fff; }
 .btn--accent:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn--ghost { color: var(--paper); border-color: rgba(247, 244, 239, 0.5); }
+.btn--ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 
 /* ---- scroll reveal (activated in Task 10) ---- */
 [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
@@ -489,7 +492,6 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
-  transparentNav?: boolean;
 }
 const { title = 'Morphwright', description = 'Morphwright designs the behavior of living cells.' } = Astro.props;
 ---
@@ -872,13 +874,10 @@ describe('marchingSquares', () => {
   });
 
   it('emits two segments for a saddle (diagonal highs)', () => {
-    // top-right (index1) and bottom-left (index2) high
-    const f = grid([0, 1, 0, 1]); // tl=0,tr=1,bl=0... wait map below
-    // index: [0]=tl(0,0), [1]=tr(1,0), [2]=bl(0,1), [3]=br(1,1)
-    // we want tr & bl high: tr=index1=1, bl=index2=1
+    // index = y*cols + x: [0]=tl, [1]=tr, [2]=bl, [3]=br
+    // tr (index 1) and bl (index 2) high, tl and br low -> saddle (case 5)
     const saddle = grid([0, 1, 1, 0]);
     expect(marchingSquares(saddle, 2, 2, 0.5).length).toBe(2);
-    void f;
   });
 });
 
@@ -1303,7 +1302,7 @@ import TopoCanvas from './topo/TopoCanvas.astro';
     </p>
     <div class="hero__actions">
       <a class="btn btn--accent" href="/science">See the science</a>
-      <a class="btn hero__btn-ghost" href="/contact">Get in touch</a>
+      <a class="btn btn--ghost" href="/contact">Get in touch</a>
     </div>
   </div>
   <a class="hero__scroll" href="#intro" aria-label="Scroll to content"><span>scroll</span></a>
@@ -1318,8 +1317,6 @@ import TopoCanvas from './topo/TopoCanvas.astro';
   .hero__headline { font-size: var(--step-4); max-width: 18ch; color: #fff; }
   .hero__sub { margin-top: var(--space-m); max-width: 46ch; font-size: var(--step-1); color: rgba(247, 244, 239, 0.78); }
   .hero__actions { margin-top: var(--space-l); display: flex; flex-wrap: wrap; gap: var(--space-s); }
-  .hero__btn-ghost { color: var(--paper); }
-  .hero__btn-ghost:hover { background: var(--paper); color: var(--ink); }
   .hero__scroll {
     position: absolute; left: 50%; bottom: 1.5rem; transform: translateX(-50%);
     z-index: 2; font-family: var(--font-mono); font-size: var(--step--1);
@@ -1402,7 +1399,7 @@ import Pillars from '../components/Pillars.astro';
         Our work starts from a simple claim: the space of behaviors a protein circuit can
         produce is finite, structured, and navigable. Read how we chart it.
       </p>
-      <p style="margin-top: var(--space-l);"><a class="btn hero__btn-ghost" style="color: var(--paper);" href="/science">Read the science</a></p>
+      <p style="margin-top: var(--space-l);"><a class="btn btn--ghost" href="/science">Read the science</a></p>
     </div>
   </Section>
 
