@@ -75,7 +75,8 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
   const nav = document.querySelector('[data-nav]');
   const toggle = document.querySelector('[data-nav-toggle]');
   toggle?.addEventListener('click', () => {
-    const open = nav?.toggleAttribute('data-open');
+    if (!nav) return;
+    const open = nav.toggleAttribute('data-open');
     toggle.setAttribute('aria-expanded', String(open));
   });
 </script>
