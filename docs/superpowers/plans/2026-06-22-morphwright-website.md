@@ -1594,7 +1594,11 @@ const roles = [
     <div class="prose" data-reveal>
       <p class="eyebrow">Careers</p>
       <h1 style="font-size: var(--step-4); margin-top: var(--space-s);">Help build the design layer for living systems.</h1>
-      <p style="margin-top: var(--space-m); color: var(--ink-80);">Placeholder copy — replace with the real pitch to candidates.</p>
+      <p style="margin-top: var(--space-m); color: var(--ink-80);">
+        We are a small team of scientists and engineers building the design layer for cellular
+        behavior. We hire for depth, curiosity, and care, and we are deliberate about the
+        environment those qualities need to thrive.
+      </p>
     </div>
   </Section>
 
@@ -1604,6 +1608,37 @@ const roles = [
       {values.map((v) => (
         <div class="value"><h3 class="value__t">{v.t}</h3><p class="value__d">{v.d}</p></div>
       ))}
+    </div>
+  </Section>
+
+  <Section variant="dark">
+    <div class="prose" data-reveal>
+      <p class="eyebrow">Our commitment</p>
+      <h2 style="font-size: var(--step-3); margin-top: var(--space-s); color: #fff;">
+        An environment built for good science.
+      </h2>
+      <p style="margin-top: var(--space-m); color: rgba(247,244,239,0.78);">
+        Building a company like this takes more than scientists. It takes engineers and designers,
+        writers and editors, and people whose craft does not fit a single label. We welcome
+        contributors from across and beyond the sciences, because the problems we work on do not
+        respect the boundaries between fields.
+      </p>
+      <p style="margin-top: var(--space-m); color: rgba(247,244,239,0.78);">
+        All voices carry equal weight here, whatever their seniority or background. Every race,
+        gender identity, and personal background is met with the same respect, without exception.
+        We work to make Morphwright a place where a career can grow, promoting inclusiveness,
+        openness, creativity, and collaboration not as policies bolted on afterward, but as the way
+        the work actually gets done.
+      </p>
+      <p style="margin-top: var(--space-m); color: rgba(247,244,239,0.78);">
+        If you see a place where your work could contribute to ours, and where you could grow with
+        us, we would like to
+        <a style="color: #fff; border-bottom: 1px solid var(--accent);" href="/contact">hear from you</a>,
+        whatever your field.
+      </p>
+      <p style="margin-top: var(--space-m); font-family: var(--font-mono); font-size: var(--step--1); color: rgba(247,244,239,0.6);">
+        Morphwright is an equal-opportunity employer.
+      </p>
     </div>
   </Section>
 
