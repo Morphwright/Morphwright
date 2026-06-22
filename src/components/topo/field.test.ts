@@ -29,6 +29,17 @@ describe('gaussianPeak', () => {
     const ay = gaussianPeak(10, 3, 22, 11, asymPeak);
     const by = gaussianPeak(10, 7, 22, 11, asymPeak);
     expect(ay).toBeCloseTo(by, 6);
+    // Transposition guard: use a grid with integer center (cols=21, rows=11 → px=10, py=5)
+    // and the same integer offset k=3 along each axis.  The correct anisotropic formula gives
+    //   x-displaced: dx=3/(r*21), dy=0   → exp(-9/(r*21)^2)  ≈ 0.905
+    //   y-displaced: dx=0, dy=3/(r*11)   → exp(-9/(r*11)^2)  ≈ 0.603
+    // which differ because 21 != 11.  Any bug that uses an identical denominator for both
+    // axes (e.g. r*cols for dy, or r*rows for dx) makes these two expressions equal and
+    // fails the assertion below.
+    const guardPeak: Peak = { x: 0.5, y: 0.5, strength: 1, radius: 0.2 };
+    const xDisp = gaussianPeak(13, 5, 21, 11, guardPeak);  // k=3 along x from px=10
+    const yDisp = gaussianPeak(10, 8, 21, 11, guardPeak);  // k=3 along y from py=5
+    expect(xDisp).not.toBeCloseTo(yDisp, 4);
   });
 });
 
