@@ -1,0 +1,12 @@
+# Cloudflare Pages headers. Astro copies public/ to the build output, so this
+# ships as dist/_headers and Pages applies it at the edge.
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# Hashed, immutable build assets (JS, CSS, self-hosted fonts) live under /_astro/.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
