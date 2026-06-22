@@ -3,8 +3,9 @@ import { makeNoise3D, fbm } from './noise';
 
 describe('makeNoise3D', () => {
   it('is deterministic for a given seed', () => {
-    const n = makeNoise3D(42);
-    expect(n(1.5, 2.5, 0.3)).toBe(n(1.5, 2.5, 0.3));
+    const n1 = makeNoise3D(42);
+    const n2 = makeNoise3D(42);
+    expect(n1(1.5, 2.5, 0.3)).toBe(n2(1.5, 2.5, 0.3));
   });
 
   it('stays within [-1, 1]', () => {
@@ -38,6 +39,8 @@ describe('fbm', () => {
       expect(v).toBeGreaterThanOrEqual(-1);
       expect(v).toBeLessThanOrEqual(1);
     }
-    expect(fbm(n, 1, 2, 3)).toBe(fbm(n, 1, 2, 3));
+    const n3 = makeNoise3D(5);
+    const n4 = makeNoise3D(5);
+    expect(fbm(n3, 1, 2, 3)).toBe(fbm(n4, 1, 2, 3));
   });
 });
