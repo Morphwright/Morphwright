@@ -169,3 +169,102 @@ Result (10 files):
 - 0 warnings
 - 0 hints
 ```
+
+---
+
+## Fix round 3
+
+**Findings addressed:**
+
+### Finding 1 — TDD RED gate missing for corrected determinism assertions
+
+Previous rounds never ran the corrected non-tautological tests against a stub implementation. The RED run in the original report only proved that the module file did not exist (import error), not that the determinism assertions could catch a bad implementation.
+
+This round produced an explicit RED-then-GREEN sequence against the corrected assertions:
+
+- A stub `noise.ts` was created that exports the correct type/function shells but uses `Math.random()` as the body for both `makeNoise3D` (returns `() => Math.random()`) and `fbm` (returns `Math.random()`).
+- Tests were run against the stub to confirm RED.
+- The stub was replaced with the real implementation.
+- Tests were run again to confirm GREEN.
+
+### Finding 2 — fbm determinism sub-assertion was near-tautological
+
+The prior fix (commit 928dfe1) replaced `expect(fbm(n, 1, 2, 3)).toBe(fbm(n, 1, 2, 3))` with `expect(fbm(n3, 1, 2, 3)).toBe(fbm(n4, 1, 2, 3))` using two separately constructed closures from the same seed. Because both closures are structurally identical pure functions (same seed, no state), the comparison is equivalent to comparing `fbm` to itself — it cannot catch a bug internal to `fbm`'s own iteration (e.g., a mutable accumulator).
+
+Fixed by storing the result and calling `fbm` a second time on the same instance:
+
+```ts
+const n5 = makeNoise3D(5);
+const expected = fbm(n5, 1, 2, 3);
+expect(fbm(n5, 1, 2, 3)).toBe(expected);
+```
+
+This asserts that calling `fbm` twice with the same noise instance and the same coordinates yields the same result — directly testing `fbm`'s internal iteration for idempotency. A mutable accumulator that incremented across calls would now fail this assertion.
+
+### RED run — stub implementation
+
+Stub `noise.ts` exports only type/function shells; both `makeNoise3D` and `fbm` return `Math.random()`.
+
+Command: `npx vitest run src/components/topo/noise.test.ts`
+
+```
+ RUN  v2.1.9 /Users/yanzhang/git/Morphwright
+
+ ❯ src/components/topo/noise.test.ts (5 tests | 3 failed) 23ms
+   × makeNoise3D > is deterministic for a given seed 3ms
+     → expected 0.9970907889765106 to be 0.2159853795616522 // Object.is equality
+   × makeNoise3D > is continuous (small input change -> small output change) 0ms
+     → expected 0.4415003882104829 to be less than 0.05
+   × fbm > stays within [-1, 1] and is deterministic 6ms
+     → expected 0.8539730747991816 to be 0.38185255872777135 // Object.is equality
+
+ FAIL  src/components/topo/noise.test.ts > makeNoise3D > is deterministic for a given seed
+AssertionError: expected 0.9970907889765106 to be 0.2159853795616522 // Object.is equality
+ ❯ src/components/topo/noise.test.ts:8:31
+
+ FAIL  src/components/topo/noise.test.ts > makeNoise3D > is continuous (small input change -> small output change)
+AssertionError: expected 0.4415003882104829 to be less than 0.05
+ ❯ src/components/topo/noise.test.ts:30:31
+
+ FAIL  src/components/topo/noise.test.ts > fbm > stays within [-1, 1] and is deterministic
+AssertionError: expected 0.8539730747991816 to be 0.38185255872777135 // Object.is equality
+ ❯ src/components/topo/noise.test.ts:44:30
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 2 passed (5)
+   Start at  18:41:12
+   Duration  235ms
+```
+
+The fbm determinism assertion at line 44 now visibly fails (`expected 0.8539… to be 0.3818…`), confirming it is a genuine test capable of catching a non-deterministic implementation.
+
+### GREEN run — real implementation
+
+Command: `npx vitest run src/components/topo/noise.test.ts`
+
+```
+ RUN  v2.1.9 /Users/yanzhang/git/Morphwright
+
+ ✓ src/components/topo/noise.test.ts (5 tests) 21ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  18:41:18
+   Duration  242ms (transform 17ms, setup 0ms, collect 14ms, tests 21ms, environment 0ms, prepare 32ms)
+```
+
+### `npm run build` (fix round 3)
+
+```
+18:41:22 [build] 1 page(s) built in 253ms
+18:41:22 [build] Complete!
+```
+
+### `npm run check` (fix round 3)
+
+```
+Result (10 files): 
+- 0 errors
+- 0 warnings
+- 0 hints
+```

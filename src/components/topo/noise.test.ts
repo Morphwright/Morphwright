@@ -39,8 +39,8 @@ describe('fbm', () => {
       expect(v).toBeGreaterThanOrEqual(-1);
       expect(v).toBeLessThanOrEqual(1);
     }
-    const n3 = makeNoise3D(5);
-    const n4 = makeNoise3D(5);
-    expect(fbm(n3, 1, 2, 3)).toBe(fbm(n4, 1, 2, 3));
+    const n5 = makeNoise3D(5);
+    const expected = fbm(n5, 1, 2, 3);
+    expect(fbm(n5, 1, 2, 3)).toBe(expected);
   });
 });
