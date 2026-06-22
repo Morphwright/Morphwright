@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+// NOTE: the form posts to a placeholder Formspree endpoint. Replace FORM_ENDPOINT
+// with a real endpoint (or wire your own handler) before launch.
+const FORM_ENDPOINT = 'https://formspree.io/f/your-form-id';
+---
+<BaseLayout title="Contact — Morphwright" description="Get in touch with Morphwright.">
+  <Section variant="light">
+    <div class="prose" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h1 style="font-size: var(--step-4); margin-top: var(--space-s);">Let's talk.</h1>
+      <p style="margin-top: var(--space-m); color: var(--ink-80);">
+        Email <a style="border-bottom: 1px solid var(--accent);" href="mailto:hello@morphwright.com">hello@morphwright.com</a>,
+        or use the form below.
+      </p>
+    </div>
+  </Section>
+
+  <Section variant="paper2">
+    <form class="form" action={FORM_ENDPOINT} method="POST" data-reveal>
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required />
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+      <button class="btn btn--accent" type="submit">Send message</button>
+    </form>
+
+    <style>
+      .form { max-width: 38rem; display: grid; gap: var(--space-m); }
+      .field { display: grid; gap: 0.4rem; }
+      .field label { font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-60); }
+      .field input, .field textarea {
+        font: inherit; color: var(--ink); background: var(--paper);
+        border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 0.9rem;
+      }
+      .field input:focus, .field textarea:focus { border-color: var(--accent); outline: none; }
+      .form button { justify-self: start; }
+    </style>
+  </Section>
+</BaseLayout>
