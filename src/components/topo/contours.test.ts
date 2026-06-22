@@ -45,8 +45,9 @@ describe('marchingSquares', () => {
 describe('contourLevels', () => {
   it('maps each threshold to its own segment list', () => {
     const f = grid([0, 0, 1, 0]);
-    const out = contourLevels(f, 2, 2, [0.5, 0.9]);
+    const out = contourLevels(f, 2, 2, [0.5, 1.5]);
     expect(out.length).toBe(2);
     expect(out[0].length).toBe(1);
+    expect(out[1].length).toBe(0);
   });
 });
