@@ -112,3 +112,35 @@ Result (6 files):
 - 0 hints
 ```
 Exit code: 0
+
+---
+
+## Fix round 2 (review findings — WCAG 1.4.1 AA)
+
+**Date:** 2026-06-22
+
+**Finding addressed:**
+
+`src/styles/global.css:52` — `a { color: inherit; text-decoration: none; }` globally removed every visual differentiator from anchor elements. On a `--paper` background, an unclassed inline link had the same color and no underline, making it indistinguishable from body text (WCAG 1.4.1 AA violation).
+
+**Fix:** Added `a:not([class]) { text-decoration: underline; }` immediately after the bare `a` reset rule. Prose links now retain underlines. Button and nav links that carry an explicit class remain unaffected (the `:not([class])` guard leaves them untouched).
+
+### Commands run
+
+#### `npm run build`
+```
+17:37:57 [build] output: "static"
+17:37:57 [build] mode: "static"
+17:37:58 [build] 1 page(s) built in 230ms
+17:37:58 [build] Complete!
+```
+Exit code: 0
+
+#### `npm run check`
+```
+Result (6 files):
+- 0 errors
+- 0 warnings
+- 0 hints
+```
+Exit code: 0
